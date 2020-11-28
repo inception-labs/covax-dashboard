@@ -1,53 +1,46 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import {useState} from 'react';
+import {render} from 'react-dom';
+import MapGL from 'react-map-gl';
+
+const MAPBOX_TOKEN = 'pk.eyJ1IjoiaW5jZXB0aW9ubGFicyIsImEiOiJja2kxMzljZjExNjVsMnBvZHVsbzExOWxkIn0.ZYJ4fN3wXHOzqInidWOVYQ'; // Set your mapbox token here
 
 export default function Home() {
+
+  const [viewport, setViewport] = useState({
+    latitude: 37.8,
+    longitude: -122.4,
+    zoom: 14,
+    bearing: 0,
+    pitch: 0
+  });
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>COVAX Global Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">COVAX!</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          An Open Source Dashboard for Tracking COVAX{' '}
+          <code className={styles.code}>powered by Inception Labs</code>
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <MapGL
+          {...viewport}
+          width="100vw"
+          height="100vh"
+          mapStyle="mapbox://styles/mapbox/dark-v9"
+          onViewportChange={nextViewport => setViewport(nextViewport)}
+          mapboxApiAccessToken={MAPBOX_TOKEN}
+        />
       </main>
 
       <footer className={styles.footer}>
